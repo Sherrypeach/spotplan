@@ -29,10 +29,10 @@ describe('the manager’s furniture', () => {
     expect(moveFurniture(room, first.id, { x: second.x, y: second.y })).toBe(room);
   });
 
-  it('draws a bookshelf and a sink as themselves, not as a desk with an apple', () => {
-    const apple = (kind: string) => render(<svg><FurnitureLook kind={kind} w={150} h={45} /></svg>).container.querySelectorAll('path').length;
-    expect(apple('teacher-desk')).toBeGreaterThan(0);
-    for (const kind of ['bookshelf', 'sink']) expect(apple(kind)).toBe(0);
+  it('draws a bookshelf and a sink as themselves, not as a desk with a laptop', () => {
+    const screens = (kind: string) => render(<svg><FurnitureLook kind={kind} w={150} h={45} /></svg>).container.querySelectorAll('rect[fill="#2f3a63"]').length;
+    expect(screens('teacher-desk')).toBeGreaterThan(0);
+    for (const kind of ['bookshelf', 'sink']) expect(screens(kind)).toBe(0);
   });
 
   it('names only the places a manager spends time in hints', () => {
