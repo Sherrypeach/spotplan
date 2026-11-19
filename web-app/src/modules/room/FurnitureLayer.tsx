@@ -35,20 +35,18 @@ const THEME_COLORS: FurnitureColors = {
   chair: 'var(--color-level-3)',
   chairEdge: 'var(--color-sage)',
 };
-// Book spines and the sink's water: the same colors on every chart, like the apple.
+// Book spines, the coffee station's water and the laptop: the same colors on every chart.
 const BOOKS = ['#f7a294', '#f6d699', '#93c2ae', '#98d9ef', '#b4a7d6'];
 const WATER = '#98d9ef';
-const APPLE = '#e23b2e';
-const APPLE_EDGE = '#a8231a';
-const LEAF = '#5f9e3a';
-const STEM = '#6b4423';
-// The classic apple outline, two units across: two round shoulders with a dip for the stem.
-const APPLE_SHAPE = 'M0 -0.55 C-0.35 -0.95 -1.05 -0.75 -1 -0.05 C-0.95 0.65 -0.45 1.05 0 0.85 C0.45 1.05 0.95 0.65 1 -0.05 C1.05 -0.75 0.35 -0.95 0 -0.55 Z';
+const LAPTOP = '#c9ccd4';
+const LAPTOP_EDGE = '#6b7280';
+const SCREEN = '#2f3a63';
+const COFFEE = '#6b4423';
 
 /**
- * One piece drawn around its middle, before turning: a wooden desk with papers,
- * an apple and the teacher's chair; a rounded wooden table with little chairs
- * around it; a soft rug with a stitched border.
+ * One piece drawn around its middle, before turning: a desk with a laptop
+ * and a coffee cup; a rounded table with little chairs around it; a soft rug
+ * with a stitched border.
  */
 export function FurnitureLook({ kind, w, h, colors = THEME_COLORS }: { kind: string; w: number; h: number; colors?: FurnitureColors }) {
   const PAPER = colors.paper;
@@ -99,27 +97,27 @@ export function FurnitureLook({ kind, w, h, colors = THEME_COLORS }: { kind: str
       </g>
     );
   }
-  // The teacher's desk: papers and an apple on top (its chair is a piece of its own).
-  const paper = { w: short * 0.42, h: short * 0.32 };
-  const apple = short * 0.17;
+  // The manager's desk: an open laptop and a coffee cup on top (its chair is a piece of its own).
+  const lap = short * 0.44;
+  const cup = short * 0.13;
   return (
     <g>
       <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={short * 0.18} fill={colors.desk} {...EDGE} />
-      <rect x={-w / 2 + short * 0.18} y={-h / 2 + short * 0.14} width={paper.w} height={paper.h} rx={2} fill={PAPER} stroke={PAPER_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" transform={`rotate(-8 ${-w / 2 + short * 0.18} ${-h / 2 + short * 0.14})`} />
-      <rect x={-w / 2 + short * 0.26} y={-h / 2 + short * 0.2} width={paper.w} height={paper.h} rx={2} fill={PAPER} stroke={PAPER_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
-      <g transform={`translate(${w / 2 - short * 0.32} ${-h / 2 + short * 0.36}) scale(${apple})`}>
-        <path d={APPLE_SHAPE} fill={APPLE} stroke={APPLE_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
-        <ellipse cx={-0.42} cy={-0.2} rx={0.18} ry={0.3} fill="#ffffff" fillOpacity={0.45} transform="rotate(20 -0.42 -0.2)" />
-        <path d="M0 -0.55 Q0.05 -0.85 0.2 -1.05" fill="none" stroke={STEM} strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        <ellipse cx={0.5} cy={-0.95} rx={0.38} ry={0.16} fill={LEAF} transform="rotate(-25 0.5 -0.95)" />
+      {/* Laptop seen from above: the keyboard base and, hinged behind it, the screen. */}
+      <g transform={`translate(${-w / 2 + short * 0.42} ${0})`}>
+        <rect x={-lap / 2} y={-lap * 0.04} width={lap} height={lap * 0.62} rx={lap * 0.06} fill={LAPTOP} stroke={LAPTOP_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+        <rect x={-lap / 2 + lap * 0.1} y={lap * 0.06} width={lap * 0.8} height={lap * 0.4} rx={1} fill={LAPTOP_EDGE} fillOpacity={0.5} />
+        <rect x={-lap / 2} y={-lap * 0.6} width={lap} height={lap * 0.56} rx={lap * 0.06} fill={SCREEN} stroke={LAPTOP_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
       </g>
+      <circle cx={w / 2 - short * 0.3} cy={-h / 2 + short * 0.34} r={cup} fill={PAPER} stroke={PAPER_EDGE} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+      <circle cx={w / 2 - short * 0.3} cy={-h / 2 + short * 0.34} r={cup * 0.55} fill={COFFEE} />
     </g>
   );
 }
 
 /**
  * Where a piece's name goes: along its long side at any angle, never upside
- * down, and on the teacher's desk in the free half, away from the papers and apple.
+ * down, and on the manager's desk in the free half, below the laptop.
  */
 export function furnitureLabel(piece: DocPiece, label: string, labelSize: number): { x: number; y: number; angle: number; fontSize: number } {
   const short = Math.min(piece.w, piece.h);
