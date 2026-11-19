@@ -1,0 +1,38 @@
+type ClassroomSummary implements Entity {
+  id: Int!
+  name: String!
+  studentCount: Int!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Classroom implements Entity {
+  id: Int!
+  name: String!
+  revision: Int!
+  document: JSON!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input CreateClassroomInput {
+  name: String!
+  document: JSON
+}
+
+input SaveClassroomInput {
+  name: String
+  document: JSON!
+  revision: Int!
+}
+
+type Query {
+  myClassrooms: [ClassroomSummary!]!
+  classroom(id: Int!): Classroom!
+}
+
+type Mutation {
+  createClassroom(createClassroomInput: CreateClassroomInput!): Classroom!
+  saveClassroom(id: Int!, saveClassroomInput: SaveClassroomInput!): Classroom!
+  removeClassroom(id: Int!): OkResult!
+}

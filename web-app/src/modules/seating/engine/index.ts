@@ -1,0 +1,14 @@
+export { placeStudents, scoreSeating, shuffleStudents } from './assign';
+export type { SeatingInput, SeatingOptions, SeatingResult } from './assign';
+export { checkSeating, needMet, problemTotal } from './checklist';
+export type { CheckInput, CheckItem, CheckKind, Tier } from './checklist';
+export { labelCounts, suggestSeatLabels } from './labels';
+export type { LabelCounts } from './labels';
+export { buildRoom } from './room';
+export type { Room, RoomInput, RoomSeat, Zone } from './room';
+export { DEFAULT_SETTINGS } from './settings';
+export type { EngineSettings } from './settings';
+export { suggestSwaps } from './suggestions';
+export type { SwapSuggestion } from './suggestions';
+export type * from './types';
+export { NO_FEEDBACK } from './types';

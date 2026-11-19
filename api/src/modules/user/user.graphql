@@ -1,0 +1,49 @@
+type User implements Entity {
+    id: Int!
+    email: String!
+    firstName: String
+    lastName: String
+    isActive: Boolean!
+    role: Role!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type UserPage {
+    items: [User!]!
+    total: Int!
+    limit: Int!
+    skip: Int!
+}
+
+input FilterUsersInput {
+    search: String
+    isActive: Boolean
+    roleId: Int
+}
+
+input CreateUserInput {
+    email: String!
+    password: String!
+    firstName: String
+    lastName: String
+    roleId: Int
+}
+
+input UpdateUserInput {
+    firstName: String
+    lastName: String
+    isActive: Boolean
+    roleId: Int
+}
+
+type Query {
+    users(pagination: PaginationInput, filters: FilterUsersInput): UserPage!
+    user(id: Int!): User
+}
+
+type Mutation {
+    createUser(createUserInput: CreateUserInput!): User!
+    updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+    removeUser(id: Int!): OkResult!
+}

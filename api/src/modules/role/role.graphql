@@ -1,0 +1,18 @@
+type Role implements Entity {
+    id: Int!
+    name: String!
+    permissions: [Permission!]!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Permission implements Entity {
+    id: Int!
+    name: String!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Query {
+    roles: [Role!]!
+}

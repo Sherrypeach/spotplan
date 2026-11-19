@@ -1,0 +1,253 @@
+@import 'tailwindcss';
+/* Latin and accented Latin only (names like "Zoë" or "José"). */
+@import '@fontsource/nunito/latin-400.css';
+@import '@fontsource/nunito/latin-ext-400.css';
+@import '@fontsource/nunito/latin-500.css';
+@import '@fontsource/nunito/latin-ext-500.css';
+@import '@fontsource/nunito/latin-600.css';
+@import '@fontsource/nunito/latin-ext-600.css';
+
+/* The seating engine's sources mention words like "outline" and "ring"; they aren't styles. */
+@source not './modules/seating/engine';
+
+/* SpotPlan's palette. Use these through Tailwind (bg-brand-green,
+   text-step-room-ink…) rather than raw hex values. */
+@theme {
+  --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  /* Small labels on the step header and privacy toggle. */
+  --text-2xs: 13px;
+  /* The same shadow, only above: for the footer band along the bottom. */
+  --shadow-up: 0 -4px 14px rgb(0 0 0 / 0.16);
+  /* The same soft shadow, below the top bar. */
+  --shadow-down: 0 4px 14px rgb(0 0 0 / 0.16);
+  /* The loading dots hop one after another. */
+  --animate-hop: hop 1.2s ease-in-out infinite;
+  @keyframes hop {
+    0%,
+    80%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    40% {
+      transform: translateY(-8px);
+      opacity: 1;
+    }
+  }
+
+  --color-brand-green: #3d4f9f;
+  /* The chart shown full screen stays white in both themes, so its button keeps light colors. */
+  --color-chart-line: #c9d0ec;
+  --color-chart-ink: #33417a;
+
+  /* Calm, playful palette (indigo and sunflower). The logo block uses the
+     brand indigo (brand-green is the token name); everything else uses these. Dark text sits on every soft color, so all of it reads. */
+  --color-sage: #5b6fb8;
+  --color-sage-ink: #33417a;
+  --color-sage-soft: #e8ebf7;
+  --color-sage-mist: #f0f2fa;
+  --color-sage-line: #c9d0ec;
+  --color-title: #4a5aa6;
+  --color-side: #f4f5fb;
+
+  /* The main action: a soft peach button with dark text. */
+  --color-action: #ffd166;
+  --color-action-hover: #f7c548;
+  --color-action-on: #3a2c05;
+  --color-action-soft: #ffdc85;
+
+  /* Glyphs and numbers on the soft step and level stamps. */
+  --color-stamp-ink: #33403f;
+
+  /* Each step's color; the room's blue also marks calm info notes, with its
+     darker "ink" for text on its light tint. */
+  --color-step-students: #f6bfa6;
+  --color-step-room: #b4cde3;
+  --color-step-room-ink: #24537a;
+  --color-step-seats: #b5dcd6;
+  --color-step-chart: #f4dd9b;
+
+  /* Level stamps 1, 2 and 3. */
+  --color-level-1: #ee9f8c;
+  --color-level-2: #f3d27a;
+  --color-level-3: #93c2ae;
+  /* The four color tags, all from the deck. */
+  --color-tag-pink: #f7a294;
+  --color-tag-orange: #f9cb9c;
+  --color-tag-blue: #98d9ef;
+  --color-tag-purple: #b4a7d6;
+
+  /* Room drawing: wooden desks and their edge. */
+  --color-desk: #f8ebcb;
+  /* Dark enough to see a desk's outline against the floor (3:1 or more). */
+  --color-desk-edge: #8f6b37;
+  --color-desk-shadow: rgb(184 146 90 / 0.25);
+  --color-desk-ink: #5a4320;
+
+  /* Warm whites, easier on the eyes than pure white: the page behind, and the
+     cards, fields and buttons on it. */
+  --color-paper: #f6f5ef;
+  --color-card: #fdfcf8;
+
+  --color-ink: #2f3b3a;
+  --color-ink-muted: #5d6968;
+  --color-line: #e6e9e8;
+  /* Input borders need 3:1 against the card color to be seen. */
+  --color-field-border: #7d8786;
+  --color-danger: #b3261e;
+  --color-scroll-thumb: #c9cfce;
+  /* The names notebook: its margin line and its ruled lines. */
+  --color-notebook-margin: #f9d3ca;
+  --color-notebook-rule: #dceff6;
+  /* A faint wash behind things under the pointer. */
+  --color-hover: rgb(0 0 0 / 0.05);
+  /* The page's background dots, and the dim layer behind a dialog. */
+  --color-dot: rgb(152 217 239 / 0.25);
+  --color-scrim: rgb(47 59 58 / 0.4);
+  /* The tour: the page dimmed around the lit-up part, and the soft glow at its edge. */
+  --color-tour-dim: rgb(47 59 58 / 0.55);
+  --color-tour-glow: rgb(255 255 255 / 0.9);
+}
+
+/* Dark theme, for tired eyes or a dim room. The app sets data-theme on <html>
+   from the teacher's choice, or from the device setting until they pick one.
+   Same calm palette: soft colors, dark glyphs on the pastel stamps. The logo
+   block keeps the brand green. Screens only: printing always uses the light
+   colors, so a chart prints dark on white. */
+@media screen {
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-paper: #1a201f;
+  --color-card: #232a29;
+  --color-side: #1e2524;
+  --color-ink: #e4eae8;
+  --color-ink-muted: #a8b3b1;
+  --color-line: #34403e;
+  --color-field-border: #74817f;
+  --color-hover: rgb(255 255 255 / 0.07);
+  --color-scroll-thumb: #4b5755;
+  --color-notebook-margin: #4a5c57;
+  --color-notebook-rule: #2e3836;
+  --color-danger: #f0a39a;
+
+  --color-title: #b4bff0;
+  --color-sage: #8f9fe0;
+  --color-sage-ink: #c9d1f5;
+  --color-sage-soft: #2b3150;
+  --color-sage-mist: #252a44;
+  --color-sage-line: #46507e;
+
+  --color-action: #f5c95a;
+  --color-action-hover: #ffd97a;
+  --color-action-soft: #d9b04a;
+
+  --color-desk: #c9ad7c;
+  --color-desk-edge: #f0dcb4;
+  --color-desk-shadow: rgb(0 0 0 / 0.5);
+  --color-desk-ink: #3b2a14;
+
+  --color-step-students: #e3a690;
+  --color-step-room: #9fbbd6;
+  --color-step-room-ink: #c8def2;
+  --color-step-seats: #9ecbc4;
+  --color-step-chart: #e3c97f;
+
+  --color-level-1: #e0907d;
+  --color-level-2: #e3c46a;
+  --color-level-3: #84b39f;
+  --color-stamp-ink: #1f2928;
+  --color-dot: rgb(255 255 255 / 0.05);
+  --color-scrim: rgb(0 0 0 / 0.6);
+  --color-tour-dim: rgb(0 0 0 / 0.7);
+  --color-tour-glow: rgb(255 255 255 / 0.35);
+}
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-base text-ink antialiased;
+    /* A long name with no spaces wraps instead of pushing out of its box. */
+    overflow-wrap: anywhere;
+  }
+
+  /* Thin, soft gray scrollbars with no arrows, everywhere. Chrome and Safari
+     use the ::-webkit-scrollbar rules; Firefox the standard properties. */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  /* The track stops short of rounded corners, and a clear border keeps the
+     thumb off the box's edge, so it never pokes out of a rounded field. */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-scroll-thumb);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 12px;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-scroll-thumb) transparent;
+    }
+  }
+
+  /* Sage, so the ring stands out on the warm white and on the peach buttons. */
+  :focus-visible {
+    @apply outline-3 outline-offset-2 outline-sage;
+  }
+}
+
+/* Keyboard focus on the room drawing: SVG shapes don't draw outlines, so the
+   focused table, spot or name gets a thick sage edge instead. */
+@layer base {
+  :is(polygon, path, circle)[role='button']:focus-visible {
+    stroke: var(--color-sage-ink);
+    stroke-width: 4px;
+  }
+  .focus-ring {
+    stroke: transparent;
+  }
+  g[role='button']:focus-visible .focus-ring {
+    stroke: var(--color-sage-ink);
+    stroke-width: 3px;
+  }
+}
+
+@utility bg-dots {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--color-dot) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* Softly ruled notebook paper with a margin line, for typing lists. Rules sit
+   every 2rem from 0.5rem down, to line up with leading-8 text and py-2, and
+   scroll with the text (local). */
+@utility bg-notebook {
+  background-color: var(--color-card);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 2.25rem,
+      var(--color-notebook-margin) 2.25rem,
+      var(--color-notebook-margin) calc(2.25rem + 1.5px),
+      transparent calc(2.25rem + 1.5px)
+    ),
+    repeating-linear-gradient(
+      var(--color-card) 0,
+      var(--color-card) calc(2rem - 1px),
+      var(--color-notebook-rule) calc(2rem - 1px),
+      var(--color-notebook-rule) 2rem
+    );
+  background-position:
+    0 0,
+    0 0.5rem;
+  background-attachment: local;
+}
+

@@ -1,0 +1,24 @@
+scalar Date
+scalar JSON
+
+interface Entity {
+    id: Int!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+enum OrderDir {
+    ASC
+    DESC
+}
+
+input PaginationInput {
+    limit: Int
+    skip: Int
+    orderBy: String
+    orderDir: OrderDir
+}
+
+type OkResult {
+    ok: Boolean!
+}

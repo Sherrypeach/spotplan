@@ -1,0 +1,18 @@
+# OPTIONAL local convenience for contributors working off-platform: a
+# disposable Postgres matching .env.example. The platform itself does not
+# use Docker for dev (PM2 + a shared/managed Postgres).
+#   docker compose -f docker-compose.dev.yml up -d
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: seating_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

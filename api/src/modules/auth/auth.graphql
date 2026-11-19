@@ -1,0 +1,20 @@
+type ResetToken {
+  resetToken: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Query {
+  me: User!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): User!
+  logout: OkResult!
+  forgotPassword(email: String!): OkResult!
+  validateOtp(email: String!, otp: String!): ResetToken!
+  resetPassword(resetToken: String!, password: String!): OkResult!
+}

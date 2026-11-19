@@ -1,0 +1,148 @@
+# Snapshot of the seating API schema (merged from its per-module .graphql
+# files). Refresh this file when the API schema changes, then run
+# `npm run codegen`.
+
+scalar Date
+
+scalar JSON
+
+interface Entity {
+  id: Int!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum OrderDir {
+  ASC
+  DESC
+}
+
+input PaginationInput {
+  limit: Int
+  skip: Int
+  orderBy: String
+  orderDir: OrderDir
+}
+
+type OkResult {
+  ok: Boolean!
+}
+
+type ResetToken {
+  resetToken: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Query {
+  me: User!
+  users(pagination: PaginationInput, filters: FilterUsersInput): UserPage!
+  user(id: Int!): User
+  roles: [Role!]!
+  myClassrooms: [ClassroomSummary!]!
+  classroom(id: Int!): Classroom!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): User!
+  logout: OkResult!
+  forgotPassword(email: String!): OkResult!
+  validateOtp(email: String!, otp: String!): ResetToken!
+  resetPassword(resetToken: String!, password: String!): OkResult!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): OkResult!
+  createClassroom(createClassroomInput: CreateClassroomInput!): Classroom!
+  saveClassroom(id: Int!, saveClassroomInput: SaveClassroomInput!): Classroom!
+  removeClassroom(id: Int!): OkResult!
+}
+
+type User implements Entity {
+  id: Int!
+  email: String!
+  firstName: String
+  lastName: String
+  isActive: Boolean!
+  role: Role!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type UserPage {
+  items: [User!]!
+  total: Int!
+  limit: Int!
+  skip: Int!
+}
+
+input FilterUsersInput {
+  search: String
+  isActive: Boolean
+  roleId: Int
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String
+  lastName: String
+  roleId: Int
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  isActive: Boolean
+  roleId: Int
+}
+
+type Role implements Entity {
+  id: Int!
+  name: String!
+  permissions: [Permission!]!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Permission implements Entity {
+  id: Int!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type ClassroomSummary implements Entity {
+  id: Int!
+  name: String!
+  studentCount: Int!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Classroom implements Entity {
+  id: Int!
+  name: String!
+  revision: Int!
+  document: JSON!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input CreateClassroomInput {
+  name: String!
+  document: JSON
+}
+
+input SaveClassroomInput {
+  name: String
+  document: JSON!
+  revision: Int!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

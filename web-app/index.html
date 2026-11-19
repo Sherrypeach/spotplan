@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>SpotPlan</title>
+    <script>
+      // Picks the light or dark theme before the page draws, so it never flashes the wrong one.
+      try {
+        // Same key and sign-in path as src/shared/theme.ts and src/shared/authPath.ts.
+        var saved = localStorage.getItem('seating.theme');
+        var picked = saved === 'dark' || saved === 'light';
+        var dark = picked ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Signing in is always light.
+        if (location.pathname === '/auth' || location.pathname.indexOf('/auth/') === 0) dark = false;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
